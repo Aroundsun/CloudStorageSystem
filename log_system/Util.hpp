@@ -2,7 +2,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <jsoncpp/json/json.h>
-
+#include <filesystem>
 #include <ctime>
 #include <fstream>
 #include <iostream>
@@ -13,21 +13,13 @@ namespace logsystem
     {
     public:
         // 获取当前时间戳
-        static std::string GetCurrentTime()
+        static time_t GetCurrentTime()
         {
             time_t now = time(0);
-            tm *ltm = localtime(&now);
-            char buffer[80];
-            strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S", ltm);
-            return std::string(buffer);
-        }
-
-        // 获取当前时间戳（毫秒）
-        static long long GetCurrentTimeMillis()
-        {
-            struct timespec ts;
-            clock_gettime(CLOCK_REALTIME, &ts);
-            return ts.tv_sec * 1000LL + ts.tv_nsec / 1000000LL;
+            // tm *ltm = localtime(&now);
+            // char buffer[80];
+            // strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S", ltm);
+            return now;
         }
     };
 
@@ -54,17 +46,24 @@ namespace logsystem
             return "";
         }
         // 创建目录
-        static void CreateDirectory(const std::string &path)
+        static void CreateDirectory(const std::string &pathname)
         {
-            if (path.empty())
-                throw std::invalid_argument("CreateDirectory: 空路径");
-
-            // 返回值含义：如果路径已存在则返回 false，真正新建过目录则返回 true
-            std::error_code ec;
-            if (!std::filesystem::create_directories(path, ec) && ec)
+            if (pathname.empty())
             {
-                throw std::runtime_error("CreateDirectory: " + ec.message());
+                throw std::invalid_argument("路径为空");
+                return;
             }
+            std::filesystem::path p(pathname); 
+            //如果路径以 / 或 \ 结尾，说明是目录路径，直接处理
+            // 否则取 parent_path（即文件所在目录
+            std::filesystem::path dir = (std::filesystem::is_directory(p) || pathname.back() == '/' 
+                                        || pathname.back() == '\\') ? p:p.parent_path();
+            
+            if(!dir.empty() && !std::filesystem::exists(dir))
+            {
+                std::filesystem::create_directories(dir);
+            }
+            
         }
 
         // 获取文件大小
@@ -135,7 +134,7 @@ namespace logsystem
             return true;
         }
         // 反序列化 json
-        static bool DeSerialize(const std::string &filename, Json::Value &val)
+        static bool DeSerialize(const std::string &filename, Json::Value *val)
         {
             std::ifstream ifs(filename, std::ios::binary);
             if (!ifs.is_open())
@@ -144,10 +143,10 @@ namespace logsystem
                 return false;
             }
 
-            Json::CharReaderBuilder reader; // 创建一个JSON 读取器
-            reader["collectComments"] = false;// 不收集注释
-            reader["allowComments"]   = false;// 不允许注释
-            std::string errs;               // 用于存储错误信息
+            Json::CharReaderBuilder reader;    // 创建一个JSON 读取器
+            reader["collectComments"] = false; // 不收集注释
+            reader["allowComments"] = false;   // 不允许注释
+            std::string errs;                  // 用于存储错误信息
             // 从文件流中解析 JSON 数据
             // 如果解析失败，errs 将包含错误信息
             // 如果解析成功，val 将包含解析后的 JSON 数据
@@ -155,7 +154,7 @@ namespace logsystem
             // 并且 errs 将包含错误信息
             // 如果解析成功，val 将包含解析后的 JSON 数据
             // 如果解析失败，val 将保持不变
-            if (!Json::parseFromStream(reader, ifs, &val, &errs))
+            if (!Json::parseFromStream(reader, ifs, val, &errs))
             {
                 std::cout << "DeSerialize: 解析 JSON 失败: " << errs << std::endl;
                 return false;
@@ -170,6 +169,47 @@ namespace logsystem
         }
     };
 
-    //配置类
-    class 
+    // 配置类 读取配置文件获取日志系统的配置信息
+    // 单例模式
+    class Config
+    {
+    public:
+        static Config *GetInstance()
+        {
+            static Config *instance = new Config(); //
+            return instance;
+        }
+
+    private:
+        Config()
+        {
+            std::string content;
+            logsystem::File file;
+            if (file.GetFileContent(&content, "../log_system/config.conf") == false)
+            {
+                std::cout << __FILE__ << __LINE__ << "open config.conf failed" << std::endl;
+                perror(NULL);
+            }
+            Json::Value root;
+            logsystem::JsonUtil::DeSerialize(content, &root); // 反序列化，把内容转成jaon value格式
+            buffer_size = root["buffer_size"].asInt64();
+            threshold = root["threshold"].asInt64();
+            linear_growth = root["linear_growth"].asInt64();
+            flush_log = root["flush_log"].asInt64();
+            backup_addr = root["backup_addr"].asString();
+            backup_port = root["backup_port"].asInt();
+            thread_count = root["thread_count"].asInt();
+        }
+
+    public:
+        size_t buffer_size;      // 缓冲区基础容量
+        size_t threshold;        // 阈值容量
+        size_t linear_growth;    // 线性增长容量
+        size_t flush_log;        // 控制日志同步到磁盘的时机，默认为0,1调用fflush，2调用fsync
+        std::string backup_addr; // 备份服务器地址
+        uint16_t backup_port;    // 备份服务器端口
+        size_t thread_count;     // 线程池线程数量
+    };
+    // 全局配置数据
+    logsystem::Config* config = logsystem::Config::GetInstance(); 
 }

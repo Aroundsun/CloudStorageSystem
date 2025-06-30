@@ -9,8 +9,6 @@
 #include<iostream>
 #include<future>
 
-
-
 class ThreadPool {
 
 public:

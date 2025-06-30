@@ -2,7 +2,7 @@
 #include <vector>
 #include "Util.hpp"
 
-logsystem::Config *config = logsystem::Config::GetInstance(); // 获取配置单例
+extern logsystem::Config *config;
 
 namespace logsystem
 {
