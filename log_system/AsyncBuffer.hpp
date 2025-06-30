@@ -2,10 +2,8 @@
 #include <vector>
 #include "Util.hpp"
 
-// 配置信息
-long long buffer_size = 1024 * 1024;   // 缓冲区大小，默认1MB
-long long threshold = 10000000;        // 阈值，默认10MB  当缓冲区大小超过阈值时，触发写入操作
-long long linear_growth = 1024 * 1024; // 线性增长大小，默认1MB
+logsystem::Config *config = logsystem::Config::GetInstance(); // 获取配置单例
+
 namespace logsystem
 {
     // 日志缓冲类
@@ -14,7 +12,7 @@ namespace logsystem
     public:
         Buffer() : write_pos_(0), read_pos_(0)
         {
-            buffer_.resize(buffer_size); // 初始化缓冲区
+            buffer_.resize(config->buffer_size); // 初始化缓冲区
         }
         // 写入日志到缓冲区
         void Push(const char *data, size_t size)
@@ -83,18 +81,18 @@ namespace logsystem
             size_t need_cap = len + write_pos_;
             if(cap == 0)
             {
-                cap = buffer_size; // 如果缓冲区容量为0，则设置为初始大小
+                cap = config->buffer_size; // 如果缓冲区容量为0，则设置为初始大小
             }
             // 如果现有容量小于需要的容量
             while (cap < need_cap)
             {
-                if (cap < threshold)
+                if (cap < config->threshold)
                 {
                     cap *=2;
                 }
                 else
                 {
-                    cap += linear_growth;
+                    cap += config->linear_growth;
                 }
                 
             }
