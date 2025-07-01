@@ -170,14 +170,14 @@ namespace logsystem
     };
 
     // 配置类 读取配置文件获取日志系统的配置信息
-    // 单例模式
+    // 单例模式 懒汉
     class Config
     {
     public:
         static Config *GetInstance()
         {
-            static Config *instance = new Config(); //
-            return instance;
+            static Config instance; //
+            return &instance;
         }
 
     private:
@@ -211,4 +211,4 @@ namespace logsystem
         size_t thread_count;     // 线程池线程数量
     };
     
-}
+} // namespace logsystem

@@ -75,7 +75,7 @@ namespace logsystem
                     if(buffer_productor_.isEmpty() && !stop_)
                     {
                         cond_consumer_.wait(lock, [this](){
-                            return stop_||!buffer_productor_.isEmpty()  ;
+                            return stop_||!buffer_productor_.isEmpty() ;
                         });
                     }
 

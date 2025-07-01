@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include "Util.hpp"
+#include <assert.h>
 
 extern logsystem::Config *config;
 
@@ -62,7 +63,23 @@ namespace logsystem
             // buffer_.clear();
             // buffer_.resize(buffer_size); // 重新初始化缓冲区
         }
-
+        void MoveWritePos(int len)
+        {
+            assert(len <= WriteableSize());
+            write_pos_ += len;
+        }
+        void MoveReadPos(int len)
+        {
+            assert(len <= ReadableSize());
+            read_pos_ += len;
+        }
+        const char *Begin() { return &buffer_[read_pos_]; }
+        char *ReadBegin(int len)// 获取当前读位置的指针
+        {
+            assert(len <= ReadableSize());
+            return &buffer_[read_pos_];
+        }
+       
     private:
         // 检查缓冲区空间是否足够，不够则扩容
         void TobeEnough(size_t len)
