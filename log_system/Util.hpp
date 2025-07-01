@@ -210,6 +210,5 @@ namespace logsystem
         uint16_t backup_port;    // 备份服务器端口
         size_t thread_count;     // 线程池线程数量
     };
-    // 全局配置数据
-    logsystem::Config* config = logsystem::Config::GetInstance(); 
+    
 }

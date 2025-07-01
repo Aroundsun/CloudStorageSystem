@@ -54,14 +54,6 @@ namespace logsystem
             return write_pos_ - read_pos_;
         }
 
-        // 移动写入位置
-        void MoveWritePos(size_t size)
-        {
-        }
-        // 移动读取位置
-        void MoveReadPos(size_t size)
-        {
-        }
         // 重置缓冲区
         void reset()
         {
