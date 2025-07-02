@@ -45,7 +45,7 @@ namespace logsystem
             若修改 mtx_ 为 std::shared_mutex，只读查询可用 std::shared_lock
             这样多个读线程能并发访问，写线程再用 unique_lock。
 
-            在函数前加 [[nodiscard]]（C++17）
+            在函数前加 [[ndiscard]o]（C++17）
 
             [[nodiscard]] AsyncLogger::ptr GetLogger(const std::string& name);
             编译器会在调用者忽略返回值时给出警告，防止“拿了单例却没用”。

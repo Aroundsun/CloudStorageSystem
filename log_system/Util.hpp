@@ -53,17 +53,15 @@ namespace logsystem
                 throw std::invalid_argument("路径为空");
                 return;
             }
-            std::filesystem::path p(pathname); 
-            //如果路径以 / 或 \ 结尾，说明是目录路径，直接处理
-            // 否则取 parent_path（即文件所在目录
-            std::filesystem::path dir = (std::filesystem::is_directory(p) || pathname.back() == '/' 
-                                        || pathname.back() == '\\') ? p:p.parent_path();
-            
-            if(!dir.empty() && !std::filesystem::exists(dir))
+            std::filesystem::path p(pathname);
+            // 如果路径以 / 或 \ 结尾，说明是目录路径，直接处理
+            //  否则取 parent_path（即文件所在目录
+            std::filesystem::path dir = (std::filesystem::is_directory(p) || pathname.back() == '/' || pathname.back() == '\\') ? p : p.parent_path();
+
+            if (!dir.empty() && !std::filesystem::exists(dir))
             {
                 std::filesystem::create_directories(dir);
             }
-            
         }
 
         // 获取文件大小
@@ -84,14 +82,14 @@ namespace logsystem
         {
             std::ifstream ifs;
             // 以二进制方式打开
-            ifs.open(filename.c_str(), std::ios::binary);
+            ifs.open(filename.c_str(), std::ios::in | std::ios::binary);
             // 文件打开失败
-            if (!ifs.is_open())
+            if (!ifs)
             {
                 std::cout << "GetFileContent: 无法打开文件: " << filename << std::endl;
                 return false;
             }
-            // 更改文件偏移指针到文件头
+            // 更改文件偏移指针到文件头p
             ifs.seekg(0, std::ios::beg);
             // 获取文件大小
             int64_t fileSize = GetFileSize(filename);
@@ -119,50 +117,30 @@ namespace logsystem
     {
     public:
         // 序列化 json
-        static bool Serialize(const Json::Value &val, std::string filename)
+        static bool Serialize(const Json::Value &val, std::string* str)
         {
-            Json::StreamWriterBuilder writer;                    // 创建一个JSON 写入器
-            std::string output = Json::writeString(writer, val); // 将Json::Value对象转换为字符串
-            std::ofstream ofs(filename);                         // 打开文件
-            if (!ofs.is_open())
+            // 建造者生成->建造者实例化json写对象->调用写对象中的接口进行序列化写入str
+            Json::StreamWriterBuilder swb;
+            std::unique_ptr<Json::StreamWriter> usw(swb.newStreamWriter());
+            std::stringstream ss;
+            if (usw->write(val, &ss) != 0)
             {
-                std::cout << "Serialize: 无法打开文件进行写入: " << filename << std::endl;
+                std::cout << "serialize error" << std::endl;
                 return false;
             }
-            ofs << output;
-
+            *str = ss.str();
             return true;
         }
         // 反序列化 json
-        static bool DeSerialize(const std::string &filename, Json::Value *val)
+        static bool DeSerialize(const std::string &str, Json::Value *val)
         {
-            std::ifstream ifs(filename, std::ios::binary);
-            if (!ifs.is_open())
+            // 操作方法类似序列化
+            Json::CharReaderBuilder crb;
+            std::unique_ptr<Json::CharReader> ucr(crb.newCharReader()); //
+            std::string err;
+            if (ucr->parse(str.c_str(), str.c_str() + str.size(), val, &err) == false)
             {
-                std::cout << "DeSerialize: 无法打开文件进行读取: " << filename << std::endl;
-                return false;
-            }
-
-            Json::CharReaderBuilder reader;    // 创建一个JSON 读取器
-            reader["collectComments"] = false; // 不收集注释
-            reader["allowComments"] = false;   // 不允许注释
-            std::string errs;                  // 用于存储错误信息
-            // 从文件流中解析 JSON 数据
-            // 如果解析失败，errs 将包含错误信息
-            // 如果解析成功，val 将包含解析后的 JSON 数据
-            // 注意：如果文件内容不是有效的 JSON 格式，parseFromStream 将返回 false
-            // 并且 errs 将包含错误信息
-            // 如果解析成功，val 将包含解析后的 JSON 数据
-            // 如果解析失败，val 将保持不变
-            if (!Json::parseFromStream(reader, ifs, val, &errs))
-            {
-                std::cout << "DeSerialize: 解析 JSON 失败: " << errs << std::endl;
-                return false;
-            }
-
-            if (ifs.peek() != std::ifstream::traits_type::eof())
-            {
-                std::cerr << "DeSerialize: 解析后文件仍有未消费的内容\n";
+                std::cout << __FILE__ << __LINE__ << "parse error" << err << std::endl;
                 return false;
             }
             return true;
@@ -185,7 +163,7 @@ namespace logsystem
         {
             std::string content;
             logsystem::File file;
-            if (file.GetFileContent(&content, "../log_system/config.conf") == false)
+            if (file.GetFileContent(&content, "../config.conf") == false)
             {
                 std::cout << __FILE__ << __LINE__ << "open config.conf failed" << std::endl;
                 perror(NULL);
@@ -210,5 +188,5 @@ namespace logsystem
         uint16_t backup_port;    // 备份服务器端口
         size_t thread_count;     // 线程池线程数量
     };
-    
+
 } // namespace logsystem

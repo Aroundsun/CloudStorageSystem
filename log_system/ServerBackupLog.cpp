@@ -14,6 +14,8 @@
 #include <filesystem>
 #include "ServerBackupLog.hpp"
 
+
+#ifndef TEST_LOGGER
 static const std::filesystem::path filename = "./logfile.log";
 
 void usage(std::string procgress)
@@ -35,6 +37,7 @@ void backup_log(const std::string &message)
         throw std::system_error(errno,std::system_category(),"write " + filename.string());
     }
 }
+
 int main(int args, char *argv[])
 {
     if (args != 2)
@@ -52,3 +55,4 @@ int main(int args, char *argv[])
 
     return 0;
 }
+#endif // TEST_LOGGER

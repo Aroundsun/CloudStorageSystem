@@ -1,9 +1,12 @@
 
 
 //线程池功能测试
-#include"threadpool.hpp"
+#include"Threadpool.hpp"
 #include<iostream>
 #include<chrono>
+
+#if TEST_THREADPOOL
+
 void exampleTask(int id)
 {
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
@@ -27,3 +30,4 @@ int main()
     }
     return 0;
 }
+#endif
