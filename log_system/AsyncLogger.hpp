@@ -46,7 +46,7 @@ namespace logsystem
                 perror("vasprintf failed!!!: ");
                 return;
             }
-            std::cout << "AsyncLogger::Debug: " << ret << std::endl;
+
 
             va_end(va);
 
@@ -203,7 +203,6 @@ namespace logsystem
         //
         AsyncLogger::ptr Build()
         {
-            std::cout << "LoggerBuilder::Build: " << logger_name_ << std::endl;
             if (logger_name_.empty())
             {
                 throw std::runtime_error("Logger name cannot be empty");
@@ -214,12 +213,11 @@ namespace logsystem
             {
                 flush_list_.emplace_back(std::make_shared<logsystem::StdoutFlush>());
             }
-            std::cout<<flush_list_.size()<< " flush_list size" << std::endl;
             return std::make_shared<AsyncLogger>(logger_name_, flush_list_, async_type_);
         }
 
-    //private:
-    public:
+    private:
+
         std::string logger_name_;                                                  // 日志器名称
         std::vector<logsystem::LogFlush::ptr> flush_list_;                         // 存放各种日志输出方式
         logsystem::AsyncType async_type_ = logsystem::AsyncType::BLOCKING_BOUNDED; // 异步类型,默认为阻塞有界缓冲区

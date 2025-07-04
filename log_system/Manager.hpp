@@ -35,7 +35,7 @@ namespace logsystem
             {
                 return AsyncLogger::ptr(); // 如果日志器不存在，返回空指针
             }
-            std::cout << "LoggerManager::GetLogger: 获取日志器 " << std::endl;
+
             return it->second;
         }
         

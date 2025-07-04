@@ -16,6 +16,8 @@
 
 
 #ifndef TEST_LOGGER
+
+#if BACKUP_LOG
 static const std::filesystem::path filename = "./backup/logfile.log";
 
 void usage(std::string procgress)
@@ -55,4 +57,6 @@ int main(int args, char *argv[])
 
     return 0;
 }
+
+#endif // BACKUP_LOG
 #endif // TEST_LOGGER

@@ -1,6 +1,6 @@
 #include "Logger.hpp"
 //g++ ./*.cpp -o build/app -std=c++17 -pthread -ljsoncpp -TEST_LOGGER
-
+#if TEST_LOGGER
 ThreadPool *tp = nullptr; // 全局线程池指针
 logsystem::Config *config; // 全局配置指针 
 
@@ -27,11 +27,9 @@ int main() {
     Glb->BuildLoggerFlush<logsystem::FileFlush>("./logfile/FileFlush.log");
     Glb->BuildLoggerFlush<logsystem::RollingFileFlush>("./logfile/RollFile_log",1024 * 1024);
    
-
-    //建造完成后，日志器已经建造，由LoggerManger类成员管理诸多日志器
-    // 把日志器给管理对象，调用者通过调用单例管理对象对日志进行落地
     logsystem::LoggerManager::GetInstance().AddLogger(Glb->Build());
     test();
     delete(tp);
     return 0;
 }
+#endif // TEST_LOGGER

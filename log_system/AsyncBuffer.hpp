@@ -21,8 +21,7 @@ namespace logsystem
             TobeEnough(size);
             if (write_pos_ + size > buffer_.capacity()) //确保空间足够
             {
-                std::cout << "Push: 缓冲区空间不足，无法写入数据" << std::endl;
-                
+                std::cerr << "Push: 缓冲区空间不足，无法写入数据" << std::endl;
             }
             // 若写入超出了当前 size，需要先扩展 size()，否则 std::copy 会越界
             if (write_pos_ + size > buffer_.size())

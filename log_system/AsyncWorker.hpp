@@ -68,7 +68,6 @@ namespace logsystem
 
         void ThreadFunc()   
         {
-            std::cout << "AsyncWorker::ThreadFunc: 异步工作器线程启动" << std::endl;
             while(true)
             {
                 {

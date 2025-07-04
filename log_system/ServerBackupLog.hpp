@@ -14,8 +14,12 @@
 #include <arpa/inet.h>
 #include <functional>
 
+#ifndef TEST_LOGGER
+
+#if BACKUP_LOG
 using func = std::function<void(const std::string &)>;
 constexpr int backlog = 32; // 最大连接数
+
 
 class TcpServer;
 // 客户端信息
@@ -169,3 +173,7 @@ private:
     uint16_t port_;     // 服务器端口
     func callback_;     // 回调函数
 };
+#endif // BACKUP_LOG
+
+
+#endif // TEST_LOGGER

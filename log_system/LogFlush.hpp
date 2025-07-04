@@ -81,7 +81,6 @@ namespace logsystem
         }
         void Flush(const char *data, size_t len) override
         {
-            std::cout << "FileFlush::Flush" << std::endl;
             // 写入
             ofs_.write(data, static_cast<std::streamsize>(len));
             // 检查写错误
@@ -126,7 +125,6 @@ namespace logsystem
             std::string path = logsystem::File::Path(basename); // 获取日志文件所在的目录
             if (!path.empty())
             {
-                std::cout << "RollingFileFlush::CreateDirectory: " << path << std::endl;
                 logsystem::File::CreateDirectory(path); // 创建目录
             }
         }
@@ -173,7 +171,6 @@ namespace logsystem
                     
                 }
                 std::string new_filename = CreatLogFileName(); // 创建新的日志文件名
-                std::cout<< "Roll::CreatLogFileName :"<< new_filename << std::endl;
 
                 if (new_filename == "")
                 {
@@ -209,9 +206,7 @@ namespace logsystem
                         std::to_string(cnt_++) + ".log";
             filename_ = filename; // 更新当前日志文件名
 
-            //DEBUG
-            std::cout<< "Roll::CreatLogFileName :"<< filename << std::endl;
-            //ENDDEBUG
+
             return filename;
         }
 
