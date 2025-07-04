@@ -25,6 +25,7 @@ namespace logsystem
         AsyncLogger(std::string logger_name, std::vector<logsystem::LogFlush::ptr> &flush_list,
                     logsystem::AsyncType async_type = logsystem::AsyncType::BLOCKING_BOUNDED)
             : logger_name_(std::move(logger_name)),
+            flush_list_(flush_list.begin(), flush_list.end()),
               async_worker_(logsystem::AsyncWorker(std::bind(&AsyncLogger::RealFlush, this, std::placeholders::_1), async_type))
         {
         }
@@ -37,22 +38,15 @@ namespace logsystem
             va_list va;
             // 初始化可变参数列表
             va_start(va, format);
-            // 使用 vasprintf 格式化字符串
-            // vasprintf 会根据格式字符串和可变参数列表生成一个动态分配的字符串
-            // 并将其存储在 ret 中
-            // 如果格式化失败，返回 nullptr
-            // 如果成功，返回格式化后的字符串长度
-            // 注意：vasprintf 是 GNU 扩展，不是标准 C 函数
-            // 需要包含 <stdio.h> 头文件
-            // 并链接时需要使用 -D_GNU_SOURCE 或 -std=gnu99
-            // 以启用 GNU 扩展
+
             char *ret;
             int r = vasprintf(&ret, format.c_str(), va);
-            if (r == -1 || ret == nullptr)
+            if (r == -1 )
             {
                 perror("vasprintf failed!!!: ");
                 return;
             }
+            std::cout << "AsyncLogger::Debug: " << ret << std::endl;
 
             va_end(va);
 
@@ -75,6 +69,7 @@ namespace logsystem
             va_end(va);
 
             serialize(LogLevel::value::INFO, file, line, ret);
+
             free(ret);
             ret = nullptr;
         }
@@ -110,7 +105,7 @@ namespace logsystem
 
             va_end(va);
 
-            serialize(LogLevel::value::WARN, file, line, ret);
+            serialize(LogLevel::value::ERROR, file, line, ret);
             free(ret);
             ret = nullptr;
         }
@@ -152,11 +147,10 @@ namespace logsystem
                     std::cout << __FILE__ << __LINE__ << "thread pool closed" << std::endl;
                 }
             }
-            else
-            {
-                // 否则将日志信息写入异步工作器的缓冲区
-                Flush(data.c_str(), data.size()); // 将日志消息推送到异步工作器的缓冲区
-            }
+            //std::cout << "AsyncLogger::serialize: " << data << std::endl;
+            // 否则将日志信息写入异步工作器的缓冲区
+            Flush(data.c_str(), data.size()); // 将日志消息推送到异步工作器的缓冲区
+            
         }
         // 将日志信息写入异步工作器的缓冲区
         void Flush(const char *data, size_t len)
@@ -172,13 +166,15 @@ namespace logsystem
             }
             for (auto &e : flush_list_)
             {
-                e.Flush(buffer.Begin(), buffer.ReadableSize()); // 遍历所有的日志输出方向，写入日志
+                std::cout<<flush_list_.size() << " flush_list size" << std::endl;
+
+                e->Flush(buffer.Begin(), buffer.ReadableSize()); // 遍历所有的日志输出方向，写入日志
             }
         }
 
     private:
         std::string logger_name_;                     // 日志器名称
-        std::vector<logsystem::LogFlush> flush_list_; // 存放各种日志输出方向
+        std::vector<logsystem::LogFlush::ptr> flush_list_; // 存放各种日志输出方向
         logsystem::AsyncWorker async_worker_;         // 异步工作器，负责日志的异步写入
     };
     // 异步日志构建器
@@ -205,8 +201,9 @@ namespace logsystem
                 LogFlushFactory::CreateLog<FlushType>(std::forward<Args>(args)...));
         }
         //
-        AsyncLogger::ptr Build() 
+        AsyncLogger::ptr Build()
         {
+            std::cout << "LoggerBuilder::Build: " << logger_name_ << std::endl;
             if (logger_name_.empty())
             {
                 throw std::runtime_error("Logger name cannot be empty");
@@ -217,10 +214,12 @@ namespace logsystem
             {
                 flush_list_.emplace_back(std::make_shared<logsystem::StdoutFlush>());
             }
+            std::cout<<flush_list_.size()<< " flush_list size" << std::endl;
             return std::make_shared<AsyncLogger>(logger_name_, flush_list_, async_type_);
         }
 
-    private:
+    //private:
+    public:
         std::string logger_name_;                                                  // 日志器名称
         std::vector<logsystem::LogFlush::ptr> flush_list_;                         // 存放各种日志输出方式
         logsystem::AsyncType async_type_ = logsystem::AsyncType::BLOCKING_BOUNDED; // 异步类型,默认为阻塞有界缓冲区

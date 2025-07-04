@@ -1,10 +1,210 @@
-[10:48:51][281474842415136[FATAL][asynclogger][../test.cpp:15]	测试日志-5
+[01:39:47][258712342110240[ERROR][asynclogger][./test.cpp:14]	测试日志-4
 
-[10:48:51][281474842415136[FATAL][asynclogger][../test.cpp:15]	测试日志-10
+[01:39:47][258712342110240[FATAL][asynclogger][./test.cpp:15]	测试日志-5
 
-[10:50:39][281474842415136[FATAL][asynclogger][../test.cpp:15]	测试日志-10
+[01:39:47][258712342110240[ERROR][asynclogger][./test.cpp:14]	测试日志-9
 
-[10:50:39][281474842415136[FATAL][asynclogger][../test.cpp:15]	测试日志-5
+[01:39:47][258712342110240[FATAL][asynclogger][./test.cpp:15]	测试日志-10
 
-[10:54:50][281474842415136[FATAL][asynclogger][../test.cpp:15]	测试日志-5
+[01:41:49][275192659918880[ERROR][asynclogger][./test.cpp:14]	测试日志-4
+
+[01:41:49][275192659918880[FATAL][asynclogger][./test.cpp:15]	测试日志-5
+
+[01:41:49][275192659918880[ERROR][asynclogger][./test.cpp:14]	测试日志-9
+
+[01:41:49][275192659918880[FATAL][asynclogger][./test.cpp:15]	测试日志-10
+
+[01:45:55][271498715758624[ERROR][asynclogger][./test.cpp:14]	测试日志-4
+
+[01:45:55][271498715758624[FATAL][asynclogger][./test.cpp:15]	测试日志-5
+
+[01:45:55][271498715758624[ERROR][asynclogger][./test.cpp:14]	测试日志-9
+
+[01:45:55][271498715758624[FATAL][asynclogger][./test.cpp:15]	测试日志-10
+
+[01:47:09][278013878968352[ERROR][asynclogger][./test.cpp:14]	测试日志-4
+
+[01:47:09][278013878968352[FATAL][asynclogger][./test.cpp:15]	测试日志-5
+
+[01:47:09][278013878968352[ERROR][asynclogger][./test.cpp:14]	测试日志-9
+
+[01:47:09][278013878968352[FATAL][asynclogger][./test.cpp:15]	测试日志-10
+
+[01:54:19][277532788391968[ERROR][asynclogger][./test.cpp:14]	测试日志-4
+
+[01:54:19][277532788391968[FATAL][asynclogger][./test.cpp:15]	测试日志-5
+
+[01:54:19][277532788391968[ERROR][asynclogger][./test.cpp:14]	测试日志-9
+
+[01:54:19][277532788391968[FATAL][asynclogger][./test.cpp:15]	测试日志-10
+
+[01:54:29][248334679830560[ERROR][asynclogger][./test.cpp:14]	测试日志-4
+
+[01:54:29][248334679830560[FATAL][asynclogger][./test.cpp:15]	测试日志-5
+
+[01:54:29][248334679830560[ERROR][asynclogger][./test.cpp:14]	测试日志-9
+
+[01:54:29][248334679830560[FATAL][asynclogger][./test.cpp:15]	测试日志-10
+
+[01:59:52][280436521844768[ERROR][asynclogger][./test.cpp:14]	测试日志-4
+
+[01:59:52][280436521844768[FATAL][asynclogger][./test.cpp:15]	测试日志-5
+
+[01:59:52][280436521844768[FATAL][asynclogger][./test.cpp:15]	测试日志-10
+
+[01:59:52][280436521844768[ERROR][asynclogger][./test.cpp:14]	测试日志-9
+
+[02:11:36][246366183264288[ERROR][asynclogger][./test.cpp:14]	测试日志-4
+
+[02:11:36][246366183264288[FATAL][asynclogger][./test.cpp:15]	测试日志-5
+
+[02:11:36][246366183264288[ERROR][asynclogger][./test.cpp:14]	测试日志-9
+
+[02:11:36][246366183264288[FATAL][asynclogger][./test.cpp:15]	测试日志-10
+
+[02:12:18][266105801478176[ERROR][asynclogger][./test.cpp:14]	测试日志-4
+
+[02:12:18][266105801478176[FATAL][asynclogger][./test.cpp:15]	测试日志-5
+
+[02:12:18][266105801478176[ERROR][asynclogger][./test.cpp:14]	测试日志-9
+
+[02:12:18][266105801478176[FATAL][asynclogger][./test.cpp:15]	测试日志-10
+
+[02:13:01][248147788787744[ERROR][asynclogger][./test.cpp:14]	测试日志-4
+
+[02:13:01][248147788787744[FATAL][asynclogger][./test.cpp:15]	测试日志-5
+
+[02:13:01][248147788787744[FATAL][asynclogger][./test.cpp:15]	测试日志-10
+
+[02:13:01][248147788787744[ERROR][asynclogger][./test.cpp:14]	测试日志-9
+
+[02:16:16][266304266657824[ERROR][asynclogger][./test.cpp:14]	测试日志-4
+
+[02:16:16][266304266657824[ERROR][asynclogger][./test.cpp:14]	测试日志-9
+
+[02:16:16][266304266657824[FATAL][asynclogger][./test.cpp:15]	测试日志-5
+
+[02:16:16][266304266657824[FATAL][asynclogger][./test.cpp:15]	测试日志-10
+
+[02:29:35][276087288856608[ERROR][asynclogger][./test.cpp:14]	测试日志-4
+
+[02:29:35][276087288856608[FATAL][asynclogger][./test.cpp:15]	测试日志-5
+
+[02:29:35][276087288856608[ERROR][asynclogger][./test.cpp:14]	测试日志-9
+
+[02:29:35][276087288856608[FATAL][asynclogger][./test.cpp:15]	测试日志-10
+
+[02:32:09][270710364635168[ERROR][asynclogger][./test.cpp:14]	测试日志-4
+
+[02:32:09][270710364635168[FATAL][asynclogger][./test.cpp:15]	测试日志-5
+
+[02:32:09][270710364635168[ERROR][asynclogger][./test.cpp:14]	测试日志-9
+
+[02:32:09][270710364635168[FATAL][asynclogger][./test.cpp:15]	测试日志-10
+
+[03:12:45][246415463030816[ERROR][asynclogger][./test.cpp:14]	测试日志-4
+
+[03:12:45][246415463030816[FATAL][asynclogger][./test.cpp:15]	测试日志-5
+
+[03:12:45][246415463030816[ERROR][asynclogger][./test.cpp:14]	测试日志-9
+
+[03:12:45][246415463030816[FATAL][asynclogger][./test.cpp:15]	测试日志-10
+
+[03:14:31][272535984406560[ERROR][asynclogger][./test.cpp:14]	测试日志-4
+
+[03:14:31][272535984406560[FATAL][asynclogger][./test.cpp:15]	测试日志-5
+
+[03:14:31][272535984406560[ERROR][asynclogger][./test.cpp:14]	测试日志-9
+
+[03:14:31][272535984406560[FATAL][asynclogger][./test.cpp:15]	测试日志-10
+
+[03:15:44][253284501200928[ERROR][asynclogger][./test.cpp:14]	测试日志-4
+
+[03:15:44][253284501200928[FATAL][asynclogger][./test.cpp:15]	测试日志-5
+
+[03:15:44][253284501200928[ERROR][asynclogger][./test.cpp:14]	测试日志-9
+
+[03:15:44][253284501200928[FATAL][asynclogger][./test.cpp:15]	测试日志-10
+
+[03:17:29][247483321286688[ERROR][asynclogger][./test.cpp:14]	测试日志-4
+
+[03:17:29][247483321286688[FATAL][asynclogger][./test.cpp:15]	测试日志-5
+
+[03:17:29][247483321286688[ERROR][asynclogger][./test.cpp:14]	测试日志-9
+
+[03:17:29][247483321286688[FATAL][asynclogger][./test.cpp:15]	测试日志-10
+
+[03:19:04][273977065304096[ERROR][asynclogger][./test.cpp:14]	测试日志-4
+
+[03:19:04][273977065304096[FATAL][asynclogger][./test.cpp:15]	测试日志-5
+
+[03:19:04][273977065304096[ERROR][asynclogger][./test.cpp:14]	测试日志-9
+
+[03:19:04][273977065304096[FATAL][asynclogger][./test.cpp:15]	测试日志-10
+
+[03:22:27][251496021364768[ERROR][asynclogger][./test.cpp:14]	测试日志-4
+
+[03:22:27][251496021364768[FATAL][asynclogger][./test.cpp:15]	测试日志-5
+
+[03:22:27][251496021364768[ERROR][asynclogger][./test.cpp:14]	测试日志-9
+
+[03:22:27][251496021364768[FATAL][asynclogger][./test.cpp:15]	测试日志-10
+
+[03:23:49][259325048512544[ERROR][asynclogger][./test.cpp:14]	测试日志-4
+
+[03:23:49][259325048512544[FATAL][asynclogger][./test.cpp:15]	测试日志-5
+
+[03:23:49][259325048512544[ERROR][asynclogger][./test.cpp:14]	测试日志-9
+
+[03:23:49][259325048512544[FATAL][asynclogger][./test.cpp:15]	测试日志-10
+
+[03:25:26][248323186597920[ERROR][asynclogger][./test.cpp:14]	测试日志-4
+
+[03:25:26][248323186597920[FATAL][asynclogger][./test.cpp:15]	测试日志-5
+
+[03:25:26][248323186597920[ERROR][asynclogger][./test.cpp:14]	测试日志-9
+
+[03:25:26][248323186597920[FATAL][asynclogger][./test.cpp:15]	测试日志-10
+
+[04:16:35][273180357120032[FATAL][asynclogger][./test.cpp:15]	测试日志-5
+
+[04:16:35][273180357120032[ERROR][asynclogger][./test.cpp:14]	测试日志-4
+
+[04:16:35][273180357120032[ERROR][asynclogger][./test.cpp:14]	测试日志-9
+
+[04:16:35][273180357120032[FATAL][asynclogger][./test.cpp:15]	测试日志-10
+
+[04:18:26][264937363587104[ERROR][asynclogger][./test.cpp:14]	测试日志-4
+
+[04:18:26][264937363587104[FATAL][asynclogger][./test.cpp:15]	测试日志-5
+
+[04:18:26][264937363587104[ERROR][asynclogger][./test.cpp:14]	测试日志-9
+
+[04:18:26][264937363587104[FATAL][asynclogger][./test.cpp:15]	测试日志-10
+
+[04:20:35][255117400866848[ERROR][asynclogger][./test.cpp:14]	测试日志-4
+
+[04:20:35][255117400866848[FATAL][asynclogger][./test.cpp:15]	测试日志-5
+
+[04:20:35][255117400866848[ERROR][asynclogger][./test.cpp:14]	测试日志-9
+
+[04:20:35][255117400866848[FATAL][asynclogger][./test.cpp:15]	测试日志-10
+
+[04:25:31][272958598160416[ERROR][asynclogger][./test.cpp:14]	测试日志-4
+
+[04:29:50][258807223193632[ERROR][asynclogger][./test.cpp:14]	测试日志-4
+
+[04:29:50][258807223193632[FATAL][asynclogger][./test.cpp:15]	测试日志-5
+
+[04:29:50][258807223193632[ERROR][asynclogger][./test.cpp:14]	测试日志-9
+
+[04:29:50][258807223193632[FATAL][asynclogger][./test.cpp:15]	测试日志-10
+
+[04:30:23][271524648734752[ERROR][asynclogger][./test.cpp:14]	测试日志-4
+
+[04:30:23][271524648734752[FATAL][asynclogger][./test.cpp:15]	测试日志-5
+
+[04:30:23][271524648734752[ERROR][asynclogger][./test.cpp:14]	测试日志-9
+
+[04:30:23][271524648734752[FATAL][asynclogger][./test.cpp:15]	测试日志-10
 

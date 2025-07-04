@@ -62,11 +62,11 @@ namespace logsystem
         FileFlush(const std::string filename)
             : filename_(filename)
         {
-
             try
             {
                 // 创建所给目录
                 logsystem::File::CreateDirectory(filename);
+                
             }
             catch (const std::invalid_argument &e)
             {
@@ -81,6 +81,7 @@ namespace logsystem
         }
         void Flush(const char *data, size_t len) override
         {
+            std::cout << "FileFlush::Flush" << std::endl;
             // 写入
             ofs_.write(data, static_cast<std::streamsize>(len));
             // 检查写错误
@@ -120,22 +121,25 @@ namespace logsystem
     public:
         using ptr = std::shared_ptr<RollingFileFlush>;
         RollingFileFlush(std::string basename, size_t max_size)
-            : base_name_(basename), max_size_(max_size), current_size_(0), cnt_(0), filename_("")
+            : base_name_(basename), max_size_(max_size), current_size_(0), cnt_(0), filename_(basename)
         {
             std::string path = logsystem::File::Path(basename); // 获取日志文件所在的目录
             if (!path.empty())
             {
+                std::cout << "RollingFileFlush::CreateDirectory: " << path << std::endl;
                 logsystem::File::CreateDirectory(path); // 创建目录
             }
         }
         void Flush(const char *data, size_t len) override
         {
             // 确保日志文件大小不满足滚动要求
+            std::cout<< "RollingFileFlush::Flush"<< std::endl;
             InitLogFile();                                       
             ofs_.write(data, static_cast<std::streamsize>(len)); // 将数据写入到缓冲区 用户态
             if (!ofs_)
             {
                 std::cerr << __FILE__ << ":" << __LINE__ << "  write log file failed" << std::endl;
+                std::cout<< "RollingFileFlush::Flush: write log file failed" << std::endl;
                 throw std::runtime_error("ofstream write fail");
             }
             current_size_ += len; // 更新当前文件大小
@@ -161,13 +165,16 @@ namespace logsystem
         // 初始化日志文件
         void InitLogFile()
         {
-            if (ofs_.is_open() || current_size_ >= max_size_)
+            if (!ofs_.is_open() || current_size_ >= max_size_)
             {
-                if (ofs_.is_open())
+                if (ofs_)
                 {
                     ofs_.close();
+                    
                 }
                 std::string new_filename = CreatLogFileName(); // 创建新的日志文件名
+                std::cout<< "Roll::CreatLogFileName :"<< new_filename << std::endl;
+
                 if (new_filename == "")
                 {
                     std::cerr << __FILE__ << ":" << __LINE__ << "  create log file name failed" << std::endl;
@@ -202,6 +209,9 @@ namespace logsystem
                         std::to_string(cnt_++) + ".log";
             filename_ = filename; // 更新当前日志文件名
 
+            //DEBUG
+            std::cout<< "Roll::CreatLogFileName :"<< filename << std::endl;
+            //ENDDEBUG
             return filename;
         }
 

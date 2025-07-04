@@ -57,6 +57,7 @@ namespace logsystem
             // 如果路径以 / 或 \ 结尾，说明是目录路径，直接处理
             //  否则取 parent_path（即文件所在目录
             std::filesystem::path dir = (std::filesystem::is_directory(p) || pathname.back() == '/' || pathname.back() == '\\') ? p : p.parent_path();
+            std::cout << "CreateDirectory: 创建目录成功: " << dir.string() << std::endl;
 
             if (!dir.empty() && !std::filesystem::exists(dir))
             {
@@ -154,7 +155,7 @@ namespace logsystem
     public:
         static Config *GetInstance()
         {
-            static Config instance; //
+            static Config instance; 
             return &instance;
         }
 
@@ -163,7 +164,7 @@ namespace logsystem
         {
             std::string content;
             logsystem::File file;
-            if (file.GetFileContent(&content, "../config.conf") == false)
+            if (file.GetFileContent(&content, "./config.conf") == false)
             {
                 std::cout << __FILE__ << __LINE__ << "open config.conf failed" << std::endl;
                 perror(NULL);

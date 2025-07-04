@@ -30,26 +30,15 @@ namespace logsystem
         AsyncLogger::ptr GetLogger(const std::string &name)
         {
             std::unique_lock<std::mutex> lock(mutex_);
-            if (logger_map_.find(name) == logger_map_.end())
+            auto it = logger_map_.find(name);
+            if (it == logger_map_.end())
             {
-                return nullptr; // 如果日志器不存在，返回空指针
+                return AsyncLogger::ptr(); // 如果日志器不存在，返回空指针
             }
-            return logger_map_[name];
+            std::cout << "LoggerManager::GetLogger: 获取日志器 " << std::endl;
+            return it->second;
         }
-        /*
-            如果用的是 C++17，可以换成 std::scoped_lock
-
-            std::scoped_lock lock(mtx_);
-            功能同 unique_lock，但更轻量（无法显式 unlock，作用域即锁域）。
-
-            若修改 mtx_ 为 std::shared_mutex，只读查询可用 std::shared_lock
-            这样多个读线程能并发访问，写线程再用 unique_lock。
-
-            在函数前加 [[ndiscard]o]（C++17）
-
-            [[nodiscard]] AsyncLogger::ptr GetLogger(const std::string& name);
-            编译器会在调用者忽略返回值时给出警告，防止“拿了单例却没用”。
-        */
+        
         AsyncLogger::ptr DefaultLogger()
         {
             return default_logger_;

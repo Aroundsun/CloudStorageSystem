@@ -59,7 +59,7 @@ namespace logsystem
                 }
             }
             buffer_productor_.Push(data, len); // 将数据写入生产者缓冲区
-            lock.unlock(); // 手动解锁互斥锁，避免消费者线程在刚被唤醒又被阻塞 
+            //lock.unlock(); // 手动解锁互斥锁，避免消费者线程在刚被唤醒又被阻塞 
             cond_consumer_.notify_one(); // 通知消费者线程有新数据可处理
         }
 
@@ -68,6 +68,7 @@ namespace logsystem
 
         void ThreadFunc()   
         {
+            std::cout << "AsyncWorker::ThreadFunc: 异步工作器线程启动" << std::endl;
             while(true)
             {
                 {
@@ -83,9 +84,7 @@ namespace logsystem
                     // 固定容量的缓冲区才需要唤醒
                     if (async_type_ == logsystem::AsyncType::BLOCKING_BOUNDED)
                         cond_productor_.notify_one();
-
                 }
-
                 callback_(buff_consumer_); // 调用回调函数处理消费者缓冲区的数据
                 buff_consumer_.reset(); // 重置消费者缓冲区
                 if(stop_ && buffer_productor_.isEmpty())

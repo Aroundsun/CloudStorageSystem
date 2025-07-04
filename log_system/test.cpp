@@ -26,6 +26,8 @@ int main() {
     Glb->BuildLoggerName("asynclogger");
     Glb->BuildLoggerFlush<logsystem::FileFlush>("./logfile/FileFlush.log");
     Glb->BuildLoggerFlush<logsystem::RollingFileFlush>("./logfile/RollFile_log",1024 * 1024);
+   
+
     //建造完成后，日志器已经建造，由LoggerManger类成员管理诸多日志器
     // 把日志器给管理对象，调用者通过调用单例管理对象对日志进行落地
     logsystem::LoggerManager::GetInstance().AddLogger(Glb->Build());

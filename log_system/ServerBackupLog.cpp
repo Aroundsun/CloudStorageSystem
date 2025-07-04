@@ -16,7 +16,7 @@
 
 
 #ifndef TEST_LOGGER
-static const std::filesystem::path filename = "./logfile.log";
+static const std::filesystem::path filename = "./backup/logfile.log";
 
 void usage(std::string procgress)
 {

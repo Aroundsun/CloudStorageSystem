@@ -1,0 +1,10 @@
+[04:30:23][271524648734752[INFO][asynclogger][./test.cpp:11]	测试日志-1
+[04:30:23][271524648734752[WARN][asynclogger][./test.cpp:12]	测试日志-2
+[04:30:23][271524648734752[DEBUG][asynclogger][./test.cpp:13]	测试日志-3
+[04:30:23][271524648734752[ERROR][asynclogger][./test.cpp:14]	测试日志-4
+[04:30:23][271524648734752[FATAL][asynclogger][./test.cpp:15]	测试日志-5
+[04:30:23][271524648734752[INFO][asynclogger][./test.cpp:11]	测试日志-6
+[04:30:23][271524648734752[WARN][asynclogger][./test.cpp:12]	测试日志-7
+[04:30:23][271524648734752[DEBUG][asynclogger][./test.cpp:13]	测试日志-8
+[04:30:23][271524648734752[ERROR][asynclogger][./test.cpp:14]	测试日志-9
+[04:30:23][271524648734752[FATAL][asynclogger][./test.cpp:15]	测试日志-10
