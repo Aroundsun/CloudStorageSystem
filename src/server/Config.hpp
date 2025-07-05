@@ -10,26 +10,6 @@ namespace storage
     const char *Config_File = "Storage.conf";
     class Config
     {
-    private:
-        int server_port_;
-        std::string server_ip;
-        std::string download_prefix_; // URL路径前缀
-        std::string deep_storage_dir_;     // 深度存储文件的存储路径
-        std::string low_storage_dir_;     // 浅度存储文件的存储路径
-        std::string storage_info_;     // 已存储文件的信息
-        int bundle_format_;//深度存储的文件后缀，由选择的压缩格式确定
-    private:
-        static std::mutex _mutex;
-        static Config *_instance;
-        Config()
-        {
-            if (ReadConfig() == false)
-            {
-                logsystem::GetLogger("asynclogger")->Fatal("ReadConfig failed");
-                return;
-            }
-            logsystem::GetLogger("asynclogger")->Info("ReadConfig complicate");
-        }
 
     public:
         // 读取配置文件信息
@@ -41,9 +21,10 @@ namespace storage
             std::string content;
             if (!fu.GetFileContent(&content))
             {
+                logsystem::GetLogger("asynclogger")->Error("GetFileContent Failed: %s", Config_File);
                 return false;
             }
-
+            
             Json::Value root;
             storage::JsonUtil::UnSerialize(content, &root); // 反序列化，把内容转成jaon value格式
 
@@ -55,7 +36,7 @@ namespace storage
             deep_storage_dir_ = root["deep_storage_dir"].asString();
             low_storage_dir_ = root["low_storage_dir"].asString();
             bundle_format_ = root["bundle_format"].asInt();
-            
+
             return true;
         }
         int GetServerPort()
@@ -102,6 +83,27 @@ namespace storage
             }
             return _instance;
         }
+private:
+        Config()
+        {
+            if (ReadConfig() == false)
+            {
+                logsystem::GetLogger("asynclogger")->Fatal("ReadConfig failed");
+                return;
+            }
+            logsystem::GetLogger("asynclogger")->Info("ReadConfig complicate");
+        }
+    private:
+        static std::mutex _mutex;
+        static Config *_instance;
+        int server_port_;
+        std::string server_ip;
+        std::string download_prefix_;  // URL路径前缀
+        std::string deep_storage_dir_; // 深度存储文件的存储路径
+        std::string low_storage_dir_;  // 浅度存储文件的存储路径
+        std::string storage_info_;     // 已存储文件的信息
+        int bundle_format_;            // 深度存储的文件后缀，由选择的压缩格式确定
+    
     };
     // 静态成员初始化，先写类型再写类域
     std::mutex Config::_mutex;
