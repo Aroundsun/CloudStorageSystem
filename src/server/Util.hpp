@@ -157,8 +157,6 @@ namespace storage
             return GetPosLen(content, 0, GetFileSize());
         }
 
-        //
-
         // 创建文件目录
         bool CreateDirectory()
         {

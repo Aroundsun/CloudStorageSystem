@@ -89,7 +89,7 @@ private:
             if (ReadConfig() == false)
             {
                 logsystem::GetLogger("asynclogger")->Fatal("ReadConfig failed");
-                return;
+                
             }
             logsystem::GetLogger("asynclogger")->Info("ReadConfig complicate");
         }
