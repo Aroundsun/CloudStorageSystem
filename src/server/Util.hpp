@@ -182,7 +182,10 @@ namespace storage
         // 将数据写到文件
         bool WriteToFile(const char *content, size_t len)
         {
+            
             std::ofstream ofs(filename_);
+            
+
             ofs.open(filename_, std::ios::binary);
             if (!ofs)
             {

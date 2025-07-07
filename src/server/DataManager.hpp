@@ -7,6 +7,9 @@
 namespace storage
 {
     extern std::string logger_name;
+    DataManager* data_ = new DataManager();
+    //创建全局存储文件对立对象
+
     // 文件的属性信息
     struct StorageInfo
     {
@@ -53,8 +56,7 @@ namespace storage
         }
 
         ~DataManager()
-        {
-        }
+        {}
 
         // 加载已存储文件信息
         bool InitLoad() // 初始化程序运行时从文件读取数据

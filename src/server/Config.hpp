@@ -99,8 +99,8 @@ private:
         int server_port_;
         std::string server_ip;
         std::string download_prefix_;  // URL路径前缀
-        std::string deep_storage_dir_; // 深度存储文件的存储路径
-        std::string low_storage_dir_;  // 浅度存储文件的存储路径
+        std::string deep_storage_dir_; // 原始文件的存储路径
+        std::string low_storage_dir_;  // 压缩文件的存储路径
         std::string storage_info_;     // 已存储文件的信息
         int bundle_format_;            // 深度存储的文件后缀，由选择的压缩格式确定
     
