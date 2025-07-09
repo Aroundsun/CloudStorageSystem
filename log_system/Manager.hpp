@@ -4,7 +4,7 @@
 
 namespace logsystem
 {
-    // 通过单例对象对日志管理器进行管理 懒汉式单例模式
+    // 对日志管理器进行管理 懒汉式单例模式
     class LoggerManager
     {
     public:

@@ -95,11 +95,11 @@ namespace logsystem
             }
             else if (config->flush_log == 2)
             {
-                ofs_.flush();                                 // 用户缓冲 → 内核
+                ofs_.flush();  // 用户缓冲 -> 内核
                 int fd = ::open(filename_.c_str(), O_WRONLY); //  重新拿 fd
                 if (fd >= 0)
                 {
-                    ::fsync(fd); // 内核 → 硬盘
+                    ::fsync(fd); // 内核 -> 硬盘
                     ::close(fd);
                 }
             }

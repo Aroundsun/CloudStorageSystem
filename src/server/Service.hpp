@@ -12,7 +12,7 @@
 
 #include <regex>
 
-#include "base64.h" // 来自 cpp-base64 库
+#include "base64.h" 
 
 extern storage::DataManager* data_;
 
@@ -334,14 +334,72 @@ namespace storage
 
         // 前端代码处理函数
         // 在渲染函数中直接处理StorageInfo
-        static std::string generateModernFileList(const std::vector<StorageInfo> &files);
+        static std::string generateModernFileList(const std::vector<StorageInfo> &files)
+        {
+            std::stringstream ss;
+            ss << "<div class='file-list'><h3>已上传文件</h3>";
+
+            for (const auto &file : files)
+            {
+                std::string filename = FileUtil(file.storage_path_).GetFileName();
+
+                // 从路径中解析存储类型
+                std::string storage_type = file.storage_path_.find("deep") != std::string::npos ? "low":"deep";
+                
+                ss << "<div class='file-item'>"
+                   << "<div class='file-info'>"
+                   << "<span>" << filename << "</span>"
+                   << "<span class='file-type'>"
+                   << (storage_type == "deep" ? "深度存储" : "普通存储")
+                   << "</span>"
+                   << "<span>" << formatSize(file.size_) << "</span>"
+                   << "<span>" << TimetoStr(file.mtime_) << "</span>"
+                   << "</div>"
+                   << "<button onclick=\"window.location='" << file.url_ << "'\"> 下载</button>"
+                   << "</div>";
+            }
+
+            ss << "</div>";
+            return ss.str();
+        }
 
         // 文件大小格式化函数
-        static std::string formatSize(uint64_t bytes);
+        static std::string formatSize(uint64_t bytes)
+        {
+            const char *units[] = {"B", "KB", "MB", "GB"};
+            int unit_index = 0;
+            double size = bytes;
+
+            while (size >= 1024 && unit_index < 3)
+            {
+                size /= 1024;
+                unit_index++;
+            }
+
+            std::stringstream ss;
+            ss << std::fixed << std::setprecision(2) << size << " " << units[unit_index];
+            return ss.str();
+        }
+        static std::string TimetoStr(time_t t)
+        {
+            std::string tmp = std::ctime(&t);
+            return tmp;
+        }
+
 
         // 文件列表展示
         static void ListShow(struct evhttp_request *req, void *arg);
-        static std::string GetETag(const StorageInfo &info);
+        static std::string GetETag(const StorageInfo &info)
+        {
+            // etag :  filename-fsize-mtime
+            FileUtil fu(info.storage_path_);
+            std::string etag = fu.GetFileName();
+            etag += "-";
+            etag += std::to_string(info.size_);
+            etag += "-";
+            etag += std::to_string(info.mtime_);
+            return etag;
+        }
         // 下载
     private:
         uint16_t server_port_;
@@ -349,9 +407,9 @@ namespace storage
         std::string download_prefix_;
         using HandleFunc = std::function<void(evhttp_request *req, void *arg)>;
 
-        // 精确匹配表
+        //回调函数 精确匹配表
         static std::unordered_map<std::string, HandleFunc> exact_routes;
-        // 模糊匹配表
+        //回调函数 模糊匹配表
         static std::vector<std::pair<std::string, HandleFunc>> prefix_routes;
 
         // 注册路由表
