@@ -6,8 +6,8 @@
 
 namespace storage
 {
-    extern std::string logger_name;
-    DataManager* data_ = new DataManager();
+    std::string logger_name = "asynclogger";
+
     //创建全局存储文件对立对象
 
     // 文件的属性信息

@@ -3,7 +3,7 @@
 #include <thread>
 using namespace std;
 
-storage::DataManager *data_;
+storage::DataManager* data_;
 ThreadPool* tp=nullptr;
 logsystem::Config* g_conf_data;
 void service_module()
